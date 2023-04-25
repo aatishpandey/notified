@@ -1,43 +1,52 @@
-import "./App.css";
-import logo from "./logo.png";
+import Header from "./components/Header.js";
+import Footer from "./components/Footer.js";
+import Error from "./components/Error.js";
+import Body from "./components/Body.js";
+import Notes from "./components/Notes.js";
+import { createBrowserRouter, Outlet } from "react-router-dom";
+import Mockman from "mockman-js";
+import Signup from "./components/Signup.js";
+import Login from "./components/Login.js";
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} alt="mockBee logo" width="180" height="180" />
-        <h1 className="brand-title">
-          Welcome to <span>mockBee!</span>
-        </h1>
-        <p className="brand-description">
-          Get started by editing <code>src/App.js</code>
-        </p>
-        <div className="links">
-          <a
-            href="https://mockbee.netlify.app/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Explore mockBee
-          </a>
-          <a
-            href="https://mockbee.netlify.app/docs/api/introduction"
-            target="_blank"
-            rel="noreferrer"
-          >
-            API Documentation
-          </a>
-          <a
-            href="https://github.com/neogcamp/mockBee"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Contribute
-          </a>
-        </div>
-      </header>
+    <div className="App h-[100%] flex flex-col">
+      <Header />
+      <Outlet />
+      {/* <Notes /> */}
+      <Footer />
     </div>
   );
-}
+};
 
-export default App;
+const appRouter = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+    errorElement: <Error />,
+    children: [
+      {
+        path: "/",
+        element: <Body />,
+      },
+      {
+        path: "notes",
+        element: <Notes />,
+      },
+      {
+        path: "mock",
+        element: <Mockman />,
+      },
+      {
+        path: "signup",
+        element: <Signup />,
+      },
+      {
+        path: "login",
+        element: <Login />,
+      },
+    ],
+  },
+]);
+
+export default appRouter;
