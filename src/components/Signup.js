@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useSignup from "../utils/useSignup";
-import sign from "jwt-encode";
+import { useContext } from "react";
+import userContext from "../utils/userContext";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const [signupInput, setSignupInput] = useState({
@@ -12,6 +14,11 @@ const Signup = () => {
   });
 
   const signup = useSignup;
+
+  const { user, setUser } = useContext(userContext);
+  const navigate = useNavigate();
+
+  useEffect(() => console.log(user), [user]);
 
   return (
     <form className="bg-grey-lighter min-h-screen flex flex-col">
@@ -74,7 +81,8 @@ const Signup = () => {
             className="w-full text-center py-3 rounded bg-teal-600 text-white font-bold hover:bg-green-dark focus:outline-none my-1"
             onClick={(e) => {
               e.preventDefault();
-              signup(signupInput);
+              const createUser = signup(signupInput, user, setUser);
+              if(createUser) navigate("/notes")
             }}
           >
             Create Account

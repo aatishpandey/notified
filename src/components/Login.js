@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
 import useLogin from "../utils/useLogin";
 import { useState } from "react";
+import { useContext } from "react";
+import userContext from "../utils/userContext";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [loginInput, setLoginInput] = useState({
@@ -8,6 +11,10 @@ const Login = () => {
     password: "",
   });
   const login = useLogin;
+
+  const { user, setUser } = useContext(userContext);
+  const navigate = useNavigate();
+
   return (
     <div className="bg-grey-lighter min-h-screen flex flex-col">
       <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
@@ -39,7 +46,10 @@ const Login = () => {
           <button
             type="submit"
             className="w-full text-center py-3 rounded bg-teal-600 text-white font-bold hover:bg-green-dark focus:outline-none my-1"
-            onClick={() => login(loginInput)}
+            onClick={() => {
+              const loginUser = login(loginInput, user, setUser);
+              if (loginUser) navigate("/notes");
+            }}
           >
             Login
           </button>
@@ -55,6 +65,24 @@ const Login = () => {
           </Link>
           .
         </div>
+        <button
+          className="hover:text-teal-600"
+          onClick={() => {
+            const loginUser = login(
+              {
+                firstName: "guest",
+                lastName: "user",
+                email: "guest@gmail.com",
+                password: "guestUser",
+              },
+              user,
+              setUser
+            );
+            if (loginUser) navigate("/notes");
+          }}
+        >
+          Guest Login
+        </button>
       </div>
     </div>
   );
