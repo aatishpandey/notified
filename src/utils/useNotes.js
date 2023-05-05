@@ -8,7 +8,7 @@ export const getUserNotes = async (setNotes) => {
         authorization: encodedToken,
       },
     });
-    console.log(res);
+    // console.log(res);
     if (res.status === 200) {
       setNotes([...res.data.notes]);
     }
@@ -30,7 +30,25 @@ export const addUserNotes = async (setNotes, note) => {
       }
     );
     if (res.status === 201) setNotes([...res.data.notes]);
-    console.log(res);
+    // console.log(res);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const updateUserNotes = async (id, note) => {
+  const encodedToken = localStorage.getItem("token");
+  try {
+    const res = await axios.post(
+      `/api/notes/${id}`,
+      { note },
+      {
+        headers: {
+          authorization: encodedToken,
+        },
+      }
+    );
+    // console.log(res);
   } catch (err) {
     console.log(err);
   }

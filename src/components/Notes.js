@@ -5,6 +5,7 @@ import { getUserNotes, addUserNotes } from "../utils/useNotes.js";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import parse from "html-react-parser";
+import NoteModal from "./NoteModal.js";
 
 const modules = {
   toolbar: [
@@ -28,30 +29,25 @@ const Notes = () => {
     id: "",
     content: "",
   });
-  // console.log(noteInput);
+  const [showModal, setShowModal] = useState(false);
+  const [noteId, setNoteId] = useState("");
+
   useEffect(() => {
     setTimeout(() => getUserNotes(setNotes), 1000);
-  }, []);
+  }, [notes]);
 
   if (!user.isLoggedIn) return <h1>You are not logged in</h1>;
   return (
     <div className="flex flex-col items-center">
+      <NoteModal
+        showmodal={showModal}
+        setShowModal={setShowModal}
+        note={note}
+        notes={notes}
+        setNotes={setNotes}
+        noteId={noteId}
+      />
       <div className="note-input flex justify-around items-center m-4">
-        {/* <input
-          type="text"
-          className="border-2 border-slate-500"
-          placeholder="title"
-          value={note.title}
-          onChange={(e) => setNote({ ...note, title: e.target.value })}
-        />
-        <input
-          type="text"
-          className="border-2 border-slate-500"
-          placeholder="body"
-          value={note.body}
-          onChange={(e) => setNote({ ...note, body: e.target.value })}
-        /> */}
-
         <ReactQuill
           className="shadow-md"
           theme="snow"
@@ -67,18 +63,33 @@ const Notes = () => {
       >
         Add Note
       </button>
+
       {notes.length === 0 ? (
         <h1>"No Notes to Display"</h1>
       ) : (
-        <div className="flex flex-col items-center border-2 m-4 p-4">
+        <div className="flex flex-col items-center m-4 p-4 min-w-[80%] ">
           {notes.map((note, index) => {
             return (
-              <div className="m-2 border-2 border-black p-4 w-full" key={index}>
+              <div
+                className="m-2 border-2 border-gray-200 hover:shadow-md p-4 w-full max-w-[60%] rounded-md"
+                key={index}
+              >
                 <h1>
                   {note.content.length === 0
                     ? "Empty Note"
                     : parse(note.content)}
                 </h1>
+                <div className="flex justify-end">
+                  <button
+                    className="bg-teal-600 text-white font-bold px-2 rounded-md hover:shadow-lg"
+                    onClick={() => {
+                      setShowModal(true);
+                      setNoteId(note._id);
+                    }}
+                  >
+                    edit
+                  </button>
+                </div>
               </div>
             );
           })}
