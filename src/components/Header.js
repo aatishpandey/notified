@@ -16,8 +16,12 @@ const Header = () => {
         <li className="p-2 hover:text-teal-600">
           <Link to="/notes">Notes</Link>
         </li>
-        <li className="p-2 hover:text-teal-600">Trash</li>
-        <li className="p-2 hover:text-teal-600">Archive</li>
+        <li className="p-2 hover:text-teal-600">
+          <Link to="archive">Archive</Link>
+        </li>
+        <li className="p-2 hover:text-teal-600">
+          <Link to="/trash">Trash</Link>
+        </li>
       </div>
 
       {user.isLoggedIn ? (

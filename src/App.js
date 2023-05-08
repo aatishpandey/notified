@@ -8,7 +8,9 @@ import { createBrowserRouter, Outlet } from "react-router-dom";
 import Mockman from "mockman-js";
 import Signup from "./components/Signup.js";
 import Login from "./components/Login.js";
+import Archive from "./components/Archive.js";
 import UserContext from "./utils/userContext.js";
+import Trash from "./components/Trash.js";
 
 const App = () => {
   const [user, setUser] = useState({
@@ -17,12 +19,35 @@ const App = () => {
     password: "",
     isLoggedIn: false,
   });
+  const [notes, setNotes] = useState([]);
+  const [archivedNotes, setArchivedNotes] = useState([]);
+  const [trashedNotes, setTrashedNotes] = useState([]);
+  const [noteId, setNoteId] = useState({
+    editNoteId: "",
+    deleteNoteId: "",
+    archiveNoteId: "",
+    trashNoteId: "",
+  });
+  const [note, setNote] = useState({
+    id: "",
+    content: "",
+  });
   return (
     <div className="App h-[100%] flex flex-col">
       <UserContext.Provider
         value={{
           user: user,
           setUser: setUser,
+          notes: notes,
+          setNotes: setNotes,
+          noteId: noteId,
+          setNoteId: setNoteId,
+          note: note,
+          setNote: setNote,
+          archivedNotes: archivedNotes,
+          setArchivedNotes: setArchivedNotes,
+          trashedNotes: trashedNotes,
+          setTrashedNotes: setTrashedNotes,
         }}
       >
         <Header />
@@ -58,6 +83,14 @@ const appRouter = createBrowserRouter([
       {
         path: "login",
         element: <Login />,
+      },
+      {
+        path: "archive",
+        element: <Archive />,
+      },
+      {
+        path: "trash",
+        element: <Trash />,
       },
     ],
   },

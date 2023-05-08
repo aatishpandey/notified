@@ -1,11 +1,19 @@
 import { useEffect, useState } from "react";
 import { useContext } from "react";
 import userContext from "../utils/userContext";
-import { getUserNotes, addUserNotes } from "../utils/useNotes.js";
+import {
+  getUserNotes,
+  addUserNotes,
+  deleteUserNotes,
+  addArchiveNotes,
+  addTrashNotes,
+} from "../utils/useNotes.js";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import parse from "html-react-parser";
 import NoteModal from "./NoteModal.js";
+import Note from "./Note.js";
+import { useNavigate } from "react-router-dom";
 
 const modules = {
   toolbar: [
@@ -22,19 +30,25 @@ const modules = {
 };
 
 const Notes = () => {
-  const { user, setUser } = useContext(userContext);
-  const [notes, setNotes] = useState([]);
+  const {
+    user,
+    notes,
+    setNotes,
+    noteId,
+    setNoteId,
+    note,
+    setArchivedNotes,
+    setTrashedNotes,
+  } = useContext(userContext);
+
   const [noteInput, setNoteInput] = useState("");
-  const [note, setNote] = useState({
-    id: "",
-    content: "",
-  });
   const [showModal, setShowModal] = useState(false);
-  const [noteId, setNoteId] = useState("");
+  const { editNoteId, deleteNoteId, archiveNoteId, trashNoteId } = noteId;
+  const navigate = useNavigate();
 
   useEffect(() => {
-    setTimeout(() => getUserNotes(setNotes), 1000);
-  }, [notes]);
+    setTimeout(() => getUserNotes(setNotes), 200);
+  }, []);
 
   if (!user.isLoggedIn) return <h1>You are not logged in</h1>;
   return (
@@ -45,7 +59,7 @@ const Notes = () => {
         note={note}
         notes={notes}
         setNotes={setNotes}
-        noteId={noteId}
+        noteId={editNoteId}
       />
       <div className="note-input flex justify-around items-center m-4">
         <ReactQuill
@@ -67,11 +81,11 @@ const Notes = () => {
       {notes.length === 0 ? (
         <h1>"No Notes to Display"</h1>
       ) : (
-        <div className="flex flex-col items-center m-4 p-4 min-w-[80%] ">
+        <div className="flex flex-col items-center m-4 p-4 min-w-[80%]">
           {notes.map((note, index) => {
             return (
               <div
-                className="m-2 border-2 border-gray-200 hover:shadow-md p-4 w-full max-w-[60%] rounded-md"
+                className="m-2 border-2 border-gray-200 hover:shadow-md p-4 w-full max-w-[60%] min-h-[120px] rounded-md flex flex-col"
                 key={index}
               >
                 <h1>
@@ -79,15 +93,45 @@ const Notes = () => {
                     ? "Empty Note"
                     : parse(note.content)}
                 </h1>
-                <div className="flex justify-end">
+                <div className="flex justify-end mt-auto">
                   <button
                     className="bg-teal-600 text-white font-bold px-2 rounded-md hover:shadow-lg"
                     onClick={() => {
                       setShowModal(true);
-                      setNoteId(note._id);
+                      setNoteId({ ...noteId, editNoteId: note._id });
                     }}
                   >
                     edit
+                  </button>
+                  <button
+                    className="bg-teal-600 text-white font-bold px-2 rounded-md hover:shadow-lg ml-2"
+                    onClick={() => {
+                      deleteUserNotes(note._id, setNotes);
+                    }}
+                  >
+                    delete
+                  </button>
+                  <button
+                    className="bg-teal-600 text-white font-bold px-2 rounded-md hover:shadow-lg ml-2"
+                    onClick={() => {
+                      // navigate("/archive");
+                      addArchiveNotes(
+                        note._id,
+                        note,
+                        setNotes,
+                        setArchivedNotes
+                      );
+                    }}
+                  >
+                    archive
+                  </button>
+                  <button
+                    className="bg-teal-600 text-white font-bold px-2 rounded-md hover:shadow-lg ml-2"
+                    onClick={() => {
+                      addTrashNotes(note._id, setNotes, setTrashedNotes);
+                    }}
+                  >
+                    trash
                   </button>
                 </div>
               </div>

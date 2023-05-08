@@ -1,6 +1,7 @@
 import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import { updateUserNotes } from "../utils/useNotes";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const NoteModal = ({
   showmodal,
@@ -28,7 +29,7 @@ const NoteModal = ({
 
   const handleSaveClick = () => {
     // console.log(editedNote);
-    updateUserNotes(noteId, { ...note, content: editedNote });
+    updateUserNotes(noteId, { ...note, content: editedNote }, setNotes);
     setShowModal(false);
   };
 

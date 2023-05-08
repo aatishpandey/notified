@@ -7,6 +7,19 @@ const userContext = createContext({
     password: "",
     isLoggedIn: false,
   },
+  notes: [],
+  archivedNotes: [],
+  trashNotes: [],
+  noteId: {
+    editNoteId: "",
+    deleteNoteId: "",
+    archiveNoteId: "",
+    trashedNoteId: "",
+  },
+  note: {
+    id: "",
+    content: "",
+  },
 });
 
 export default userContext;

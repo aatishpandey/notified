@@ -1,5 +1,8 @@
 import axios from "axios";
+import userContext from "./userContext";
+import { useContext } from "react";
 
+//get user notes from db
 export const getUserNotes = async (setNotes) => {
   const encodedToken = localStorage.getItem("token");
   try {
@@ -17,6 +20,7 @@ export const getUserNotes = async (setNotes) => {
   }
 };
 
+//add user notes to db
 export const addUserNotes = async (setNotes, note) => {
   const encodedToken = localStorage.getItem("token");
   try {
@@ -36,7 +40,9 @@ export const addUserNotes = async (setNotes, note) => {
   }
 };
 
-export const updateUserNotes = async (id, note) => {
+//edit user notes in db
+export const updateUserNotes = async (id, note, setNotes) => {
+  // console.log(id, note);
   const encodedToken = localStorage.getItem("token");
   try {
     const res = await axios.post(
@@ -49,6 +55,185 @@ export const updateUserNotes = async (id, note) => {
       }
     );
     // console.log(res);
+    if (res.status === 201) setNotes([...res.data.notes]);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+//delete user notes from db
+export const deleteUserNotes = async (id, setNotes) => {
+  const encodedToken = localStorage.getItem("token");
+
+  try {
+    const res = await axios.delete(`/api/notes/${id}`, {
+      headers: {
+        authorization: encodedToken,
+      },
+    });
+    // console.log(res);
+    if (res.status === 200) {
+      setNotes([...res.data.notes]);
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+//get users archived notes from db
+export const getArchivedNotes = async (setArchivedNotes) => {
+  const encodedToken = localStorage.getItem("token");
+  try {
+    const res = await axios.get("/api/archives", {
+      headers: {
+        authorization: encodedToken,
+      },
+    });
+    // console.log(res);
+    if (res.status === 200) setArchivedNotes([...res.data.archives]);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+//add note to user's archives
+export const addArchiveNotes = async (id, note, setNotes, setArchivedNotes) => {
+  const encodedToken = localStorage.getItem("token");
+  // console.log(id, note);
+  try {
+    const res = await axios.post(
+      `/api/notes/archives/${id}`,
+      { note },
+      {
+        headers: {
+          authorization: encodedToken,
+        },
+      }
+    );
+    // console.log(res);
+    if (res.status === 201) {
+      setNotes([...res?.data?.notes]);
+      setArchivedNotes([...res?.data?.archives]);
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+//restore note from user's archive - unarchive
+export const restoreArchivedNotes = async (id, setNotes, setArchivedNotes) => {
+  const encodedToken = localStorage.getItem("token");
+
+  try {
+    const res = await axios.post(
+      `/api/archives/restore/${id}`,
+      {},
+      {
+        headers: {
+          authorization: encodedToken,
+        },
+      }
+    );
+    // console.log(res);
+    if (res.status === 200) {
+      setNotes([...res.data.notes]);
+      setArchivedNotes([...res.data.archives]);
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+//delete note from user's archive
+export const deleteArchivedNote = async (id, setArchivedNotes) => {
+  const encodedToken = localStorage.getItem("token");
+
+  try {
+    const res = await axios.delete(`/api/archives/delete/${id}`, {
+      headers: {
+        authorization: encodedToken,
+      },
+    });
+    // console.log(res);
+    if (res.status === 200) setArchivedNotes([...res.data.archives]);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+//get user's trashed notes
+export const getTrashedNotes = async (setTrashedNotes) => {
+  const encodedToken = localStorage.getItem("token");
+  try {
+    const res = await axios.get("/api/trash", {
+      headers: {
+        authorization: encodedToken,
+      },
+    });
+    // console.log(res);
+    if (res.status === 200) setTrashedNotes([...res.data.trash]);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+//add note to user's trashed
+export const addTrashNotes = async (id, setNotes, setTrashedNotes) => {
+  const encodedToken = localStorage.getItem("token");
+  try {
+    const res = await axios.post(
+      `/api/notes/trash/${id}`,
+      {},
+      {
+        headers: {
+          authorization: encodedToken,
+        },
+      }
+    );
+    // console.log(res);
+    if (res.status === 201) {
+      setNotes([...res.data.notes]);
+      setTrashedNotes([...res.data.trash]);
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+//restore note from user's trash
+export const restoreTrashedNotes = async (id, setNotes, setTrashedNotes) => {
+  const encodedToken = localStorage.getItem("token");
+  try {
+    const res = await axios.post(
+      `/api/trash/restore/${id}`,
+      {},
+      {
+        headers: {
+          authorization: encodedToken,
+        },
+      }
+    );
+    // console.log(res);
+    if (res.status === 200) {
+      setNotes([...res.data.notes]);
+      setTrashedNotes([...res.data.trash]);
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+//delete note from user's trashed
+export const deleteTrashedNotes = async (id, setTrashedNotes) => {
+  const encodedToken = localStorage.getItem("token");
+  try {
+    const res = await axios.delete(`/api/trash/delete/${id}`, {
+      headers: {
+        authorization: encodedToken,
+      },
+    });
+    // console.log(res)
+    if (res.status === 200) setTrashedNotes([...res.data.trash]);
   } catch (err) {
     console.log(err);
   }
