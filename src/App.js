@@ -11,6 +11,7 @@ import Login from "./components/Login.js";
 import Archive from "./components/Archive.js";
 import UserContext from "./utils/userContext.js";
 import Trash from "./components/Trash.js";
+import "react-tooltip/dist/react-tooltip.css";
 
 const App = () => {
   const [user, setUser] = useState({

@@ -14,6 +14,9 @@ import parse from "html-react-parser";
 import NoteModal from "./NoteModal.js";
 import Note from "./Note.js";
 import { useNavigate } from "react-router-dom";
+// import { Tooltip } from "react-tooltip";
+import { icon } from "@fortawesome/fontawesome-svg-core/import.macro";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const modules = {
   toolbar: [
@@ -50,7 +53,10 @@ const Notes = () => {
     setTimeout(() => getUserNotes(setNotes), 200);
   }, []);
 
-  if (!user.isLoggedIn) return <h1>You are not logged in</h1>;
+  if (!user.isLoggedIn) {
+    return <h1>You are not logged in</h1>;
+  }
+
   return (
     <div className="flex flex-col items-center">
       <NoteModal
@@ -85,7 +91,7 @@ const Notes = () => {
           {notes.map((note, index) => {
             return (
               <div
-                className="m-2 border-2 border-gray-200 hover:shadow-md p-4 w-full max-w-[60%] min-h-[120px] rounded-md flex flex-col"
+                className="m-2 border-2 border-gray-200 hover:shadow-md px-4 pt-4 w-full max-w-[60%] min-h-[120px] rounded-md flex flex-col"
                 key={index}
               >
                 <h1>
@@ -93,26 +99,36 @@ const Notes = () => {
                     ? "Empty Note"
                     : parse(note.content)}
                 </h1>
-                <div className="flex justify-end mt-auto">
-                  <button
-                    className="bg-teal-600 text-white font-bold px-2 rounded-md hover:shadow-lg"
+                <div className="flex justify-end items-center mt-auto py-2">
+                  <FontAwesomeIcon
+                    icon={icon({
+                      name: "pen-to-square",
+                      style: "regular",
+                    })}
+                    size="lg"
+                    className="text-gray-500 ml-2 hover:text-gray-800 cursor-pointer hover:bg-gray-200 
+                    hover:rounded-full p-2"
                     onClick={() => {
                       setShowModal(true);
                       setNoteId({ ...noteId, editNoteId: note._id });
                     }}
-                  >
-                    edit
-                  </button>
-                  <button
+                  />
+
+                  {/* <button
                     className="bg-teal-600 text-white font-bold px-2 rounded-md hover:shadow-lg ml-2"
                     onClick={() => {
                       deleteUserNotes(note._id, setNotes);
                     }}
                   >
                     delete
-                  </button>
-                  <button
-                    className="bg-teal-600 text-white font-bold px-2 rounded-md hover:shadow-lg ml-2"
+                  </button> */}
+                  <FontAwesomeIcon
+                    icon={icon({
+                      name: "box-archive",
+                    })}
+                    size="lg"
+                    className="text-gray-500 ml-2 hover:text-gray-800 cursor-pointer hover:bg-gray-200 
+                    hover:rounded-full p-2"
                     onClick={() => {
                       // navigate("/archive");
                       addArchiveNotes(
@@ -122,17 +138,29 @@ const Notes = () => {
                         setArchivedNotes
                       );
                     }}
-                  >
-                    archive
-                  </button>
-                  <button
-                    className="bg-teal-600 text-white font-bold px-2 rounded-md hover:shadow-lg ml-2"
+                  />
+
+                  <FontAwesomeIcon
+                    icon={icon({
+                      name: "trash-can",
+                      style: "regular",
+                    })}
+                    size="lg"
+                    className="text-gray-500 ml-2 hover:text-gray-800 cursor-pointer hover:bg-gray-200 
+                    hover:rounded-full p-2 "
                     onClick={() => {
                       addTrashNotes(note._id, setNotes, setTrashedNotes);
                     }}
-                  >
-                    trash
-                  </button>
+                  />
+
+                  <FontAwesomeIcon
+                    icon={icon({
+                      name: "palette",
+                    })}
+                    size="lg"
+                    className="text-gray-500 ml-2 hover:text-gray-800 cursor-pointer  hover:bg-gray-200 
+                    hover:rounded-full p-2"
+                  />
                 </div>
               </div>
             );

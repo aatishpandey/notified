@@ -7,6 +7,8 @@ import {
 import parse from "html-react-parser";
 import userContext from "../utils/userContext.js";
 import { useNavigate } from "react-router-dom";
+import { icon } from "@fortawesome/fontawesome-svg-core/import.macro";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Trash = () => {
   const { user, setNotes, trashedNotes, setTrashedNotes } =
@@ -36,23 +38,31 @@ const Trash = () => {
                     : parse(note.content)}
                 </h1>
                 <div className="flex justify-end mt-auto">
-                  <button
-                    className="bg-teal-600 text-white font-bold px-2 rounded-md hover:shadow-lg ml-2"
+                  <FontAwesomeIcon
+                    icon={icon({
+                      name: "trash-can",
+                      style: "regular",
+                    })}
+                    size="lg"
+                    className="text-gray-500 ml-2 hover:text-gray-800 cursor-pointer hover:bg-gray-200 
+                    hover:rounded-full p-2 "
                     onClick={() => {
                       deleteTrashedNotes(note._id, setTrashedNotes);
                     }}
-                  >
-                    delete
-                  </button>
-                  <button
-                    className="bg-teal-600 text-white font-bold px-2 rounded-md hover:shadow-lg ml-2"
+                  />
+
+                  <FontAwesomeIcon
+                    icon={icon({
+                      name: "trash-arrow-up",
+                    })}
+                    size="lg"
+                    className="text-gray-500 ml-2 hover:text-gray-800 cursor-pointer hover:bg-gray-200 
+                    hover:rounded-full p-2 "
                     onClick={() => {
                       restoreTrashedNotes(note._id, setNotes, setTrashedNotes);
                       // navigate("/notes");
                     }}
-                  >
-                    restore
-                  </button>
+                  />
                 </div>
               </div>
             );

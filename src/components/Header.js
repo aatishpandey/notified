@@ -14,13 +14,13 @@ const Header = () => {
       </Link>
       <div className="flex list-none text-lg font-medium">
         <li className="p-2 hover:text-teal-600">
-          <Link to="/notes">Notes</Link>
+          <Link to={!user.isLoggedIn ? "/" : "/notes"}>Notes</Link>
         </li>
         <li className="p-2 hover:text-teal-600">
-          <Link to="archive">Archive</Link>
+          <Link to={!user.isLoggedIn ? "/" : "/archive"}>Archive</Link>
         </li>
         <li className="p-2 hover:text-teal-600">
-          <Link to="/trash">Trash</Link>
+          <Link to={!user.isLoggedIn ? "/" : "/trash"}>Trash</Link>
         </li>
       </div>
 

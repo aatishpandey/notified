@@ -7,6 +7,8 @@ import {
 import parse from "html-react-parser";
 import userContext from "../utils/userContext.js";
 import { useNavigate } from "react-router-dom";
+import { icon } from "@fortawesome/fontawesome-svg-core/import.macro";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Archive = () => {
   const { user, setNotes, archivedNotes, setArchivedNotes } =
@@ -38,16 +40,26 @@ const Archive = () => {
                     : parse(note.content)}
                 </h1>
                 <div className="flex justify-end mt-auto">
-                  <button
-                    className="bg-teal-600 text-white font-bold px-2 rounded-md hover:shadow-lg ml-2"
+                  <FontAwesomeIcon
+                    icon={icon({
+                      name: "trash-can",
+                      style: "regular",
+                    })}
+                    size="lg"
+                    className="text-gray-500 ml-2 hover:text-gray-800 cursor-pointer hover:bg-gray-200 
+                    hover:rounded-full p-2 "
                     onClick={() => {
                       deleteArchivedNote(note._id, setArchivedNotes);
                     }}
-                  >
-                    delete
-                  </button>
-                  <button
-                    className="bg-teal-600 text-white font-bold px-2 rounded-md hover:shadow-lg ml-2"
+                  />
+
+                  <FontAwesomeIcon
+                    icon={icon({
+                      name: "boxes-packing",
+                    })}
+                    size="lg"
+                    className="text-gray-500 ml-2 hover:text-gray-800 cursor-pointer hover:bg-gray-200 
+                    hover:rounded-full p-2"
                     onClick={() => {
                       restoreArchivedNotes(
                         note._id,
@@ -56,9 +68,7 @@ const Archive = () => {
                       );
                       //   navigate("/notes");
                     }}
-                  >
-                    Unarchive
-                  </button>
+                  />
                 </div>
               </div>
             );
