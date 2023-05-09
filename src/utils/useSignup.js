@@ -1,9 +1,10 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 
-const useSignup = async (signupInput, user, setUser) => {
+const useSignup = async (signupInput, user, setUser, handleToast) => {
   try {
     const res = await axios.post("/api/auth/signup", signupInput);
-    // console.log(res);
+    console.log(res);
     if (res.status === 201) {
       localStorage.setItem("token", res.data.encodedToken);
       setUser({
@@ -13,6 +14,13 @@ const useSignup = async (signupInput, user, setUser) => {
         password: res.data.createdUser.password,
         isLoggedIn: true,
       });
+      handleToast(
+        toast.success("Signed Up", {
+          autoClose: 5000,
+          position: "bottom-left",
+          theme: "colored",
+        })
+      );
       return true;
     }
   } catch (err) {

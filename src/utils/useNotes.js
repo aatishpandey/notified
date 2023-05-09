@@ -1,6 +1,5 @@
 import axios from "axios";
-import userContext from "./userContext";
-import { useContext } from "react";
+import { toast } from "react-toastify";
 
 //get user notes from db
 export const getUserNotes = async (setNotes) => {
@@ -21,7 +20,7 @@ export const getUserNotes = async (setNotes) => {
 };
 
 //add user notes to db
-export const addUserNotes = async (setNotes, note) => {
+export const addUserNotes = async (setNotes, note, handleToast) => {
   const encodedToken = localStorage.getItem("token");
   try {
     const res = await axios.post(
@@ -33,7 +32,16 @@ export const addUserNotes = async (setNotes, note) => {
         },
       }
     );
-    if (res.status === 201) setNotes([...res.data.notes]);
+    if (res.status === 201) {
+      setNotes([...res.data.notes]);
+      handleToast(
+        toast.success("Note Added", {
+          autoClose: 2000,
+          position: "bottom-left",
+          theme: "colored",
+        })
+      );
+    }
     // console.log(res);
   } catch (err) {
     console.log(err);
@@ -41,7 +49,7 @@ export const addUserNotes = async (setNotes, note) => {
 };
 
 //edit user notes in db
-export const updateUserNotes = async (id, note, setNotes) => {
+export const updateUserNotes = async (id, note, setNotes, handleToast) => {
   // console.log(id, note);
   const encodedToken = localStorage.getItem("token");
   try {
@@ -55,14 +63,23 @@ export const updateUserNotes = async (id, note, setNotes) => {
       }
     );
     // console.log(res);
-    if (res.status === 201) setNotes([...res.data.notes]);
+    if (res.status === 201) {
+      setNotes([...res.data.notes]);
+      handleToast(
+        toast.success("Note Updated", {
+          autoClose: 2000,
+          position: "bottom-left",
+          theme: "colored",
+        })
+      );
+    }
   } catch (err) {
     console.log(err);
   }
 };
 
 //delete user notes from db
-export const deleteUserNotes = async (id, setNotes) => {
+export const deleteUserNotes = async (id, setNotes, handleToast) => {
   const encodedToken = localStorage.getItem("token");
 
   try {
@@ -74,6 +91,13 @@ export const deleteUserNotes = async (id, setNotes) => {
     // console.log(res);
     if (res.status === 200) {
       setNotes([...res.data.notes]);
+      handleToast(
+        toast.success("Note deleted", {
+          autoClose: 2000,
+          position: "bottom-left",
+          theme: "colored",
+        })
+      );
     }
   } catch (err) {
     console.log(err);
@@ -97,7 +121,13 @@ export const getArchivedNotes = async (setArchivedNotes) => {
 };
 
 //add note to user's archives
-export const addArchiveNotes = async (id, note, setNotes, setArchivedNotes) => {
+export const addArchiveNotes = async (
+  id,
+  note,
+  setNotes,
+  setArchivedNotes,
+  handleToast
+) => {
   const encodedToken = localStorage.getItem("token");
   // console.log(id, note);
   try {
@@ -114,6 +144,13 @@ export const addArchiveNotes = async (id, note, setNotes, setArchivedNotes) => {
     if (res.status === 201) {
       setNotes([...res?.data?.notes]);
       setArchivedNotes([...res?.data?.archives]);
+      handleToast(
+        toast.success("Note Archived", {
+          autoClose: 2000,
+          position: "bottom-left",
+          theme: "colored",
+        })
+      );
     }
   } catch (err) {
     console.log(err);
@@ -121,7 +158,12 @@ export const addArchiveNotes = async (id, note, setNotes, setArchivedNotes) => {
 };
 
 //restore note from user's archive - unarchive
-export const restoreArchivedNotes = async (id, setNotes, setArchivedNotes) => {
+export const restoreArchivedNotes = async (
+  id,
+  setNotes,
+  setArchivedNotes,
+  handleToast
+) => {
   const encodedToken = localStorage.getItem("token");
 
   try {
@@ -138,6 +180,13 @@ export const restoreArchivedNotes = async (id, setNotes, setArchivedNotes) => {
     if (res.status === 200) {
       setNotes([...res.data.notes]);
       setArchivedNotes([...res.data.archives]);
+      handleToast(
+        toast.success("Note Unarchived", {
+          autoClose: 2000,
+          position: "bottom-left",
+          theme: "colored",
+        })
+      );
     }
   } catch (err) {
     console.log(err);
@@ -145,7 +194,7 @@ export const restoreArchivedNotes = async (id, setNotes, setArchivedNotes) => {
 };
 
 //delete note from user's archive
-export const deleteArchivedNote = async (id, setArchivedNotes) => {
+export const deleteArchivedNote = async (id, setArchivedNotes, handleToast) => {
   const encodedToken = localStorage.getItem("token");
 
   try {
@@ -155,7 +204,16 @@ export const deleteArchivedNote = async (id, setArchivedNotes) => {
       },
     });
     // console.log(res);
-    if (res.status === 200) setArchivedNotes([...res.data.archives]);
+    if (res.status === 200) {
+      setArchivedNotes([...res.data.archives]);
+      handleToast(
+        toast.success("Note Deleted", {
+          autoClose: 2000,
+          position: "bottom-left",
+          theme: "colored",
+        })
+      );
+    }
   } catch (err) {
     console.log(err);
   }
@@ -178,7 +236,12 @@ export const getTrashedNotes = async (setTrashedNotes) => {
 };
 
 //add note to user's trashed
-export const addTrashNotes = async (id, setNotes, setTrashedNotes) => {
+export const addTrashNotes = async (
+  id,
+  setNotes,
+  setTrashedNotes,
+  handleToast
+) => {
   const encodedToken = localStorage.getItem("token");
   try {
     const res = await axios.post(
@@ -194,6 +257,13 @@ export const addTrashNotes = async (id, setNotes, setTrashedNotes) => {
     if (res.status === 201) {
       setNotes([...res.data.notes]);
       setTrashedNotes([...res.data.trash]);
+      handleToast(
+        toast.success("Note Trashed", {
+          autoClose: 2000,
+          position: "bottom-left",
+          theme: "colored",
+        })
+      );
     }
   } catch (err) {
     console.log(err);
@@ -201,7 +271,12 @@ export const addTrashNotes = async (id, setNotes, setTrashedNotes) => {
 };
 
 //restore note from user's trash
-export const restoreTrashedNotes = async (id, setNotes, setTrashedNotes) => {
+export const restoreTrashedNotes = async (
+  id,
+  setNotes,
+  setTrashedNotes,
+  handleToast
+) => {
   const encodedToken = localStorage.getItem("token");
   try {
     const res = await axios.post(
@@ -217,6 +292,13 @@ export const restoreTrashedNotes = async (id, setNotes, setTrashedNotes) => {
     if (res.status === 200) {
       setNotes([...res.data.notes]);
       setTrashedNotes([...res.data.trash]);
+      handleToast(
+        toast.success("Note restored", {
+          autoClose: 2000,
+          position: "bottom-left",
+          theme: "colored",
+        })
+      );
     }
   } catch (err) {
     console.log(err);
@@ -224,7 +306,7 @@ export const restoreTrashedNotes = async (id, setNotes, setTrashedNotes) => {
 };
 
 //delete note from user's trashed
-export const deleteTrashedNotes = async (id, setTrashedNotes) => {
+export const deleteTrashedNotes = async (id, setTrashedNotes, handleToast) => {
   const encodedToken = localStorage.getItem("token");
   try {
     const res = await axios.delete(`/api/trash/delete/${id}`, {
@@ -233,7 +315,16 @@ export const deleteTrashedNotes = async (id, setTrashedNotes) => {
       },
     });
     // console.log(res)
-    if (res.status === 200) setTrashedNotes([...res.data.trash]);
+    if (res.status === 200) {
+      setTrashedNotes([...res.data.trash]);
+      handleToast(
+        toast.success("Note Deleted", {
+          autoClose: 2000,
+          position: "bottom-left",
+          theme: "colored",
+        })
+      );
+    }
   } catch (err) {
     console.log(err);
   }

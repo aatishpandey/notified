@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { icon } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Tooltip } from "react-tooltip";
+import { ToastContainer } from "react-toastify";
 
 const tooltipStyle = {
   backgroundColor: "#717370",
@@ -27,9 +28,14 @@ const Archive = () => {
     getArchivedNotes(setArchivedNotes);
   }, []);
 
+  const handleToast = (toastInput) => {
+    toastInput();
+  };
+
   if (!user.isLoggedIn) return <h1>You are not logged in</h1>;
   return (
     <>
+      <ToastContainer/>
       <Tooltip
         anchorSelect=".delete-btn"
         style={tooltipStyle}
@@ -75,7 +81,11 @@ const Archive = () => {
                     className="delete-btn text-gray-500 ml-2 hover:text-gray-800 cursor-pointer hover:bg-gray-200 
                     hover:rounded-full p-2 "
                     onClick={() => {
-                      deleteArchivedNote(note._id, setArchivedNotes);
+                      deleteArchivedNote(
+                        note._id,
+                        setArchivedNotes,
+                        handleToast
+                      );
                     }}
                   />
 
@@ -90,7 +100,8 @@ const Archive = () => {
                       restoreArchivedNotes(
                         note._id,
                         setNotes,
-                        setArchivedNotes
+                        setArchivedNotes,
+                        handleToast
                       );
                       //   navigate("/notes");
                     }}

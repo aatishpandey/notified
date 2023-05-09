@@ -10,7 +10,7 @@ const Header = () => {
   return (
     <div className=" header w-[100%] shadow-lg py-4 px-4 flex justify-between items-center">
       <Link to="/">
-        <div className="text-3xl font-sans hover:text-teal-600 ">📔Notify</div>
+        <div className="text-3xl font-sans hover:text-teal-600 ">📔Notified</div>
       </Link>
       <div className="flex list-none text-lg font-medium">
         <li className="p-2 hover:text-teal-600">

@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { icon } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Tooltip } from "react-tooltip";
+import { ToastContainer } from "react-toastify";
 
 const tooltipStyle = {
   backgroundColor: "#717370",
@@ -27,9 +28,14 @@ const Trash = () => {
     getTrashedNotes(setTrashedNotes);
   }, []);
 
+  const handleToast = (toastInput) => {
+    toastInput();
+  };
+
   if (!user.isLoggedIn) return <h1>You are not logged in</h1>;
   return (
     <>
+      <ToastContainer pauseOnFocusLoss={false} />
       <Tooltip
         anchorSelect=".delete-btn"
         style={tooltipStyle}
@@ -75,7 +81,11 @@ const Trash = () => {
                     className="delete-btn text-gray-500 ml-2 hover:text-gray-800 cursor-pointer hover:bg-gray-200 
                     hover:rounded-full p-2 "
                     onClick={() => {
-                      deleteTrashedNotes(note._id, setTrashedNotes);
+                      deleteTrashedNotes(
+                        note._id,
+                        setTrashedNotes,
+                        handleToast
+                      );
                     }}
                   />
 
@@ -87,7 +97,12 @@ const Trash = () => {
                     className="restore-btn text-gray-500 ml-2 hover:text-gray-800 cursor-pointer hover:bg-gray-200 
                     hover:rounded-full p-2 "
                     onClick={() => {
-                      restoreTrashedNotes(note._id, setNotes, setTrashedNotes);
+                      restoreTrashedNotes(
+                        note._id,
+                        setNotes,
+                        setTrashedNotes,
+                        handleToast
+                      );
                       // navigate("/notes");
                     }}
                   />

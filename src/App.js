@@ -12,6 +12,7 @@ import Archive from "./components/Archive.js";
 import UserContext from "./utils/userContext.js";
 import Trash from "./components/Trash.js";
 import "react-tooltip/dist/react-tooltip.css";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   const [user, setUser] = useState({

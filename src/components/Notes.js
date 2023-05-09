@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 import { icon } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { ToastContainer } from "react-toastify";
 
 const modules = {
   toolbar: [
@@ -56,8 +57,12 @@ const Notes = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    setTimeout(() => getUserNotes(setNotes), 200);
+    if (user.isLoggedIn) getUserNotes(setNotes);
   }, []);
+
+  const handleToast = (toastInput) => {
+    toastInput();
+  };
 
   if (!user.isLoggedIn) {
     return <h1>You are not logged in</h1>;
@@ -65,6 +70,7 @@ const Notes = () => {
 
   return (
     <div className="flex flex-col items-center">
+      <ToastContainer pauseOnFocusLoss={false} />
       <NoteModal
         showmodal={showModal}
         setShowModal={setShowModal}
@@ -72,6 +78,7 @@ const Notes = () => {
         notes={notes}
         setNotes={setNotes}
         noteId={editNoteId}
+        handleToast={handleToast}
       />
       <div className="note-input flex justify-around items-center m-4">
         <ReactQuill
@@ -125,7 +132,9 @@ const Notes = () => {
 
       <button
         className="bg-teal-600 font-bold  text-white self-center py-1 px-2 rounded-md my-4"
-        onClick={() => addUserNotes(setNotes, { ...note, content: noteInput })}
+        onClick={() =>
+          addUserNotes(setNotes, { ...note, content: noteInput }, handleToast)
+        }
       >
         Add Note
       </button>
@@ -163,7 +172,7 @@ const Notes = () => {
                   {/* <button
                     className="bg-teal-600 text-white font-bold px-2 rounded-md hover:shadow-lg ml-2"
                     onClick={() => {
-                      deleteUserNotes(note._id, setNotes);
+                      deleteUserNotes(note._id, setNotes,handleToast);
                     }}
                   >
                     delete
@@ -181,7 +190,8 @@ const Notes = () => {
                         note._id,
                         note,
                         setNotes,
-                        setArchivedNotes
+                        setArchivedNotes,
+                        handleToast
                       );
                     }}
                   />
@@ -195,7 +205,12 @@ const Notes = () => {
                     className="trash-btn text-gray-500 ml-2 hover:text-gray-800 cursor-pointer 
                     hover:bg-gray-200 hover:rounded-full p-2 "
                     onClick={() => {
-                      addTrashNotes(note._id, setNotes, setTrashedNotes);
+                      addTrashNotes(
+                        note._id,
+                        setNotes,
+                        setTrashedNotes,
+                        handleToast
+                      );
                     }}
                   />
 

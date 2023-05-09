@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useContext } from "react";
 import userContext from "../utils/userContext";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 const Login = () => {
   const [loginInput, setLoginInput] = useState({
@@ -15,8 +16,13 @@ const Login = () => {
   const { user, setUser } = useContext(userContext);
   const navigate = useNavigate();
 
+  const handleToast = (toastInput) => {
+    toastInput();
+  };
+
   return (
     <div className="bg-grey-lighter min-h-screen flex flex-col">
+      <ToastContainer pauseOnFocusLoss={false} />
       <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
         <div className="bg-white px-6 py-8 rounded shadow-md text-black w-full">
           <h1 className="mb-8 text-3xl text-center">Login</h1>
@@ -47,7 +53,7 @@ const Login = () => {
             type="submit"
             className="w-full text-center py-3 rounded bg-teal-600 text-white font-bold hover:bg-green-dark focus:outline-none my-1"
             onClick={() => {
-              const loginUser = login(loginInput, user, setUser);
+              const loginUser = login(loginInput, user, setUser, handleToast);
               if (loginUser) navigate("/notes");
             }}
           >
@@ -76,7 +82,8 @@ const Login = () => {
                 password: "guestUser",
               },
               user,
-              setUser
+              setUser,
+              handleToast
             );
             if (loginUser) navigate("/notes");
           }}

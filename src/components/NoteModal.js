@@ -10,6 +10,7 @@ const NoteModal = ({
   notes,
   setNotes,
   noteId,
+  handleToast,
 }) => {
   const modules = {
     toolbar: [
@@ -29,7 +30,12 @@ const NoteModal = ({
 
   const handleSaveClick = () => {
     // console.log(editedNote);
-    updateUserNotes(noteId, { ...note, content: editedNote }, setNotes);
+    updateUserNotes(
+      noteId,
+      { ...note, content: editedNote },
+      setNotes,
+      handleToast
+    );
     setShowModal(false);
   };
 
