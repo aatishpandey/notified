@@ -26,16 +26,16 @@ const App = () => {
   const [trashedNotes, setTrashedNotes] = useState([]);
   const [noteId, setNoteId] = useState({
     editNoteId: "",
-    deleteNoteId: "",
-    archiveNoteId: "",
-    trashNoteId: "",
   });
   const [note, setNote] = useState({
     id: "",
     content: "",
   });
+
+  const [showSideBar, setShowSideBar] = useState(false);
+
   return (
-    <div className="App h-[100%] flex flex-col">
+    <div className="App h-[100%] flex flex-col min-w-[30%]">
       <UserContext.Provider
         value={{
           user: user,
@@ -50,6 +50,8 @@ const App = () => {
           setArchivedNotes: setArchivedNotes,
           trashedNotes: trashedNotes,
           setTrashedNotes: setTrashedNotes,
+          showSideBar: showSideBar,
+          setShowSideBar: setShowSideBar,
         }}
       >
         <Header />

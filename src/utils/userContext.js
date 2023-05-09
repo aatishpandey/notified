@@ -12,14 +12,12 @@ const userContext = createContext({
   trashNotes: [],
   noteId: {
     editNoteId: "",
-    deleteNoteId: "",
-    archiveNoteId: "",
-    trashedNoteId: "",
   },
   note: {
     id: "",
     content: "",
   },
+  showSideBar: false,
 });
 
 export default userContext;

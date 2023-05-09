@@ -11,6 +11,7 @@ import { icon } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Tooltip } from "react-tooltip";
 import { ToastContainer } from "react-toastify";
+import Sidebar from "./Sidebar";
 
 const tooltipStyle = {
   backgroundColor: "#717370",
@@ -20,8 +21,14 @@ const tooltipStyle = {
 };
 
 const Archive = () => {
-  const { user, setNotes, archivedNotes, setArchivedNotes } =
-    useContext(userContext);
+  const {
+    user,
+    setNotes,
+    archivedNotes,
+    setArchivedNotes,
+    showSideBar,
+    setShowSideBar,
+  } = useContext(userContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -34,8 +41,13 @@ const Archive = () => {
 
   if (!user.isLoggedIn) return <h1>You are not logged in</h1>;
   return (
-    <>
-      <ToastContainer/>
+    <div className="archive-container flex justify-center">
+      <Sidebar
+        showSideBar={showSideBar}
+        setShowSideBar={setShowSideBar}
+        user={user}
+      />
+      <ToastContainer />
       <Tooltip
         anchorSelect=".delete-btn"
         style={tooltipStyle}
@@ -59,11 +71,11 @@ const Archive = () => {
       {archivedNotes.length === 0 ? (
         <h1>No Notes to display</h1>
       ) : (
-        <div className="flex flex-col items-center m-4 p-4 min-w-[80%]">
+        <div className="flex flex-col items-center m-4 p-4 w-full md:w-[80%] ">
           {archivedNotes.map((note, index) => {
             return (
               <div
-                className="m-2 border-2 border-gray-200 hover:shadow-md p-4 w-full max-w-[60%] min-h-[140px] rounded-md flex flex-col"
+                className="m-2 border-2 border-gray-200 text-sm sm:text-base hover:shadow-md px-4 pt-4 w-full      md:w-[65%] min-h-[135px] rounded-md flex flex-col overflow-hidden"
                 key={index}
               >
                 <h1>
@@ -112,7 +124,7 @@ const Archive = () => {
           })}
         </div>
       )}
-    </>
+    </div>
   );
 };
 

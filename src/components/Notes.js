@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import userContext from "../utils/userContext";
 import {
   getUserNotes,
@@ -17,6 +16,7 @@ import { Tooltip } from "react-tooltip";
 import { icon } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ToastContainer } from "react-toastify";
+import Sidebar from "./Sidebar";
 
 const modules = {
   toolbar: [
@@ -49,6 +49,8 @@ const Notes = () => {
     note,
     setArchivedNotes,
     setTrashedNotes,
+    showSideBar,
+    setShowSideBar,
   } = useContext(userContext);
 
   const [noteInput, setNoteInput] = useState("");
@@ -70,6 +72,11 @@ const Notes = () => {
 
   return (
     <div className="flex flex-col items-center">
+      <Sidebar
+        showSideBar={showSideBar}
+        setShowSideBar={setShowSideBar}
+        user={user}
+      />
       <ToastContainer pauseOnFocusLoss={false} />
       <NoteModal
         showmodal={showModal}
@@ -142,11 +149,11 @@ const Notes = () => {
       {notes.length === 0 ? (
         <h1>"No Notes to Display"</h1>
       ) : (
-        <div className="flex flex-col items-center m-4 p-4 min-w-[80%]">
+        <div className="flex flex-col items-center md:m-4 p-4 w-full md:w-[80%] ">
           {notes.map((note, index) => {
             return (
               <div
-                className="m-2 border-2 border-gray-200 hover:shadow-md px-4 pt-4 w-full max-w-[60%] min-h-[140px] rounded-md flex flex-col"
+                className="m-2 border-2 border-gray-200 text-sm sm:text-base hover:shadow-md px-4 pt-4 w-full      md:w-[65%] min-h-[135px] rounded-md flex flex-col overflow-hidden"
                 key={index}
               >
                 <h1>
@@ -154,7 +161,7 @@ const Notes = () => {
                     ? "Empty Note"
                     : parse(note.content)}
                 </h1>
-                <div className="flex justify-end items-center mt-auto py-2">
+                <div className="flex justify-end items-center mt-auto py-2 ">
                   <FontAwesomeIcon
                     icon={icon({
                       name: "pen-to-square",
