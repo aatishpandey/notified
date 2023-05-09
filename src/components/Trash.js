@@ -9,6 +9,14 @@ import userContext from "../utils/userContext.js";
 import { useNavigate } from "react-router-dom";
 import { icon } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Tooltip } from "react-tooltip";
+
+const tooltipStyle = {
+  backgroundColor: "#717370",
+  color: "#FFFFFF",
+  fontWeight: 600,
+  padding: "2px 4px",
+};
 
 const Trash = () => {
   const { user, setNotes, trashedNotes, setTrashedNotes } =
@@ -22,6 +30,26 @@ const Trash = () => {
   if (!user.isLoggedIn) return <h1>You are not logged in</h1>;
   return (
     <>
+      <Tooltip
+        anchorSelect=".delete-btn"
+        style={tooltipStyle}
+        place="bottom"
+        noArrow
+        offset={2}
+      >
+        delete forever
+      </Tooltip>
+
+      <Tooltip
+        anchorSelect=".restore-btn"
+        style={tooltipStyle}
+        place="bottom"
+        noArrow
+        offset={2}
+      >
+        restore
+      </Tooltip>
+
       {trashedNotes.length === 0 ? (
         <h1>No Notes to display</h1>
       ) : (
@@ -29,7 +57,7 @@ const Trash = () => {
           {trashedNotes.map((note, index) => {
             return (
               <div
-                className="m-2 border-2 border-gray-200 hover:shadow-md p-4 w-full max-w-[60%] min-h-[120px] rounded-md flex flex-col"
+                className="m-2 border-2 border-gray-200 hover:shadow-md p-4 w-full max-w-[60%] min-h-[140px] rounded-md flex flex-col"
                 key={index}
               >
                 <h1>
@@ -44,7 +72,7 @@ const Trash = () => {
                       style: "regular",
                     })}
                     size="lg"
-                    className="text-gray-500 ml-2 hover:text-gray-800 cursor-pointer hover:bg-gray-200 
+                    className="delete-btn text-gray-500 ml-2 hover:text-gray-800 cursor-pointer hover:bg-gray-200 
                     hover:rounded-full p-2 "
                     onClick={() => {
                       deleteTrashedNotes(note._id, setTrashedNotes);
@@ -56,7 +84,7 @@ const Trash = () => {
                       name: "trash-arrow-up",
                     })}
                     size="lg"
-                    className="text-gray-500 ml-2 hover:text-gray-800 cursor-pointer hover:bg-gray-200 
+                    className="restore-btn text-gray-500 ml-2 hover:text-gray-800 cursor-pointer hover:bg-gray-200 
                     hover:rounded-full p-2 "
                     onClick={() => {
                       restoreTrashedNotes(note._id, setNotes, setTrashedNotes);

@@ -9,21 +9,47 @@ import userContext from "../utils/userContext.js";
 import { useNavigate } from "react-router-dom";
 import { icon } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Tooltip } from "react-tooltip";
+
+const tooltipStyle = {
+  backgroundColor: "#717370",
+  color: "#FFFFFF",
+  fontWeight: 600,
+  padding: "2px 4px",
+};
 
 const Archive = () => {
   const { user, setNotes, archivedNotes, setArchivedNotes } =
     useContext(userContext);
-  //   const { archiveNoteId, deleteNoteId, editNoteId } = noteId;
   const navigate = useNavigate();
 
   useEffect(() => {
     getArchivedNotes(setArchivedNotes);
-    // console.log(archivedNotes);
   }, []);
 
   if (!user.isLoggedIn) return <h1>You are not logged in</h1>;
   return (
     <>
+      <Tooltip
+        anchorSelect=".delete-btn"
+        style={tooltipStyle}
+        place="bottom"
+        noArrow
+        offset={2}
+      >
+        delete
+      </Tooltip>
+
+      <Tooltip
+        anchorSelect=".unarchive-btn"
+        style={tooltipStyle}
+        place="bottom"
+        noArrow
+        offset={2}
+      >
+        unarchive
+      </Tooltip>
+
       {archivedNotes.length === 0 ? (
         <h1>No Notes to display</h1>
       ) : (
@@ -31,7 +57,7 @@ const Archive = () => {
           {archivedNotes.map((note, index) => {
             return (
               <div
-                className="m-2 border-2 border-gray-200 hover:shadow-md p-4 w-full max-w-[60%] min-h-[120px] rounded-md flex flex-col"
+                className="m-2 border-2 border-gray-200 hover:shadow-md p-4 w-full max-w-[60%] min-h-[140px] rounded-md flex flex-col"
                 key={index}
               >
                 <h1>
@@ -46,7 +72,7 @@ const Archive = () => {
                       style: "regular",
                     })}
                     size="lg"
-                    className="text-gray-500 ml-2 hover:text-gray-800 cursor-pointer hover:bg-gray-200 
+                    className="delete-btn text-gray-500 ml-2 hover:text-gray-800 cursor-pointer hover:bg-gray-200 
                     hover:rounded-full p-2 "
                     onClick={() => {
                       deleteArchivedNote(note._id, setArchivedNotes);
@@ -58,7 +84,7 @@ const Archive = () => {
                       name: "boxes-packing",
                     })}
                     size="lg"
-                    className="text-gray-500 ml-2 hover:text-gray-800 cursor-pointer hover:bg-gray-200 
+                    className="unarchive-btn text-gray-500 ml-2 hover:text-gray-800 cursor-pointer hover:bg-gray-200 
                     hover:rounded-full p-2"
                     onClick={() => {
                       restoreArchivedNotes(
