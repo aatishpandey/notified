@@ -12,7 +12,6 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import parse from "html-react-parser";
 import NoteModal from "./NoteModal.js";
-import Note from "./Note.js";
 import { useNavigate } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 import { icon } from "@fortawesome/fontawesome-svg-core/import.macro";
