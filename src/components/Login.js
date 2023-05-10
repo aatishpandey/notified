@@ -17,10 +17,6 @@ const Login = () => {
     useContext(userContext);
   const navigate = useNavigate();
 
-  const handleToast = (toastInput) => {
-    toastInput();
-  };
-
   return (
     <div className="bg-grey-lighter min-h-screen flex flex-col">
       <ToastContainer pauseOnFocusLoss={false} />
@@ -58,7 +54,6 @@ const Login = () => {
                 loginInput,
                 user,
                 setUser,
-                handleToast,
                 setNotes,
                 setArchivedNotes,
                 setTrashedNotes
@@ -90,7 +85,6 @@ const Login = () => {
               },
               user,
               setUser,
-              handleToast,
               setNotes,
               setArchivedNotes,
               setTrashedNotes

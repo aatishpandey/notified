@@ -5,7 +5,7 @@ const useLogin = async (
   loginInput,
   user,
   setUser,
-  handleToast,
+
   setNotes,
   setArchivedNotes,
   setTrashedNotes
@@ -26,13 +26,13 @@ const useLogin = async (
       setNotes([...res?.data?.foundUser?.notes]);
       setArchivedNotes([...res?.data?.foundUser?.archives]);
       setTrashedNotes([...res?.data?.foundUser?.trash]);
-      handleToast(
-        toast.success("Logged In", {
-          autoClose: 2000,
-          position: "bottom-left",
-          theme: "colored",
-        })
-      );
+
+      toast.success("Logged In", {
+        autoClose: 2000,
+        position: "bottom-left",
+        theme: "colored",
+      });
+
       return true;
     }
   } catch (err) {

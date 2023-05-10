@@ -5,7 +5,7 @@ const useSignup = async (
   signupInput,
   user,
   setUser,
-  handleToast,
+
   setNotes,
   setArchivedNotes,
   setTrashedNotes
@@ -23,16 +23,16 @@ const useSignup = async (
         isLoggedIn: true,
       });
 
-      setNotes([...res.data.foundUser.notes]);
-      setArchivedNotes([...res.data.foundUser.archives]);
-      setTrashedNotes([...res.data.foundUser.trash]);
-      handleToast(
-        toast.success("Signed Up", {
-          autoClose: 5000,
-          position: "bottom-left",
-          theme: "colored",
-        })
-      );
+      setNotes([...res?.data?.createdUser?.notes]);
+      setArchivedNotes([...res?.data?.createdUser?.archives]);
+      setTrashedNotes([...res?.data?.createdUser?.trash]);
+
+      toast.success("Signed Up", {
+        autoClose: 5000,
+        position: "bottom-left",
+        theme: "colored",
+      });
+
       return true;
     }
   } catch (err) {
