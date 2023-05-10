@@ -13,7 +13,8 @@ const Login = () => {
   });
   const login = useLogin;
 
-  const { user, setUser } = useContext(userContext);
+  const { user, setUser, setNotes, setArchivedNotes, setTrashedNotes } =
+    useContext(userContext);
   const navigate = useNavigate();
 
   const handleToast = (toastInput) => {
@@ -53,7 +54,15 @@ const Login = () => {
             type="submit"
             className="w-full text-center py-3 rounded bg-teal-600 text-white font-bold hover:bg-green-dark focus:outline-none my-1"
             onClick={() => {
-              const loginUser = login(loginInput, user, setUser, handleToast);
+              const loginUser = login(
+                loginInput,
+                user,
+                setUser,
+                handleToast,
+                setNotes,
+                setArchivedNotes,
+                setTrashedNotes
+              );
               if (loginUser) navigate("/notes");
             }}
           >
@@ -76,14 +85,15 @@ const Login = () => {
           onClick={() => {
             const loginUser = login(
               {
-                firstName: "guest",
-                lastName: "user",
                 email: "guest@gmail.com",
                 password: "guestUser",
               },
               user,
               setUser,
-              handleToast
+              handleToast,
+              setNotes,
+              setArchivedNotes,
+              setTrashedNotes
             );
             if (loginUser) navigate("/notes");
           }}

@@ -8,15 +8,16 @@ import { ToastContainer } from "react-toastify";
 
 const Signup = () => {
   const [signupInput, setSignupInput] = useState({
-    firstname: "",
-    lastname: "",
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
   });
 
   const signup = useSignup;
 
-  const { user, setUser } = useContext(userContext);
+  const { user, setUser, setNotes, setArchivedNotes, setTrashedNotes } =
+    useContext(userContext);
   const navigate = useNavigate();
 
   const handleToast = (toastInput) => {
@@ -36,9 +37,9 @@ const Signup = () => {
             name="firstname"
             placeholder="First Name"
             minLength="3"
-            value={signupInput.firstname}
+            value={signupInput.firstName}
             onChange={(e) =>
-              setSignupInput({ ...signupInput, firstname: e.target.value })
+              setSignupInput({ ...signupInput, firstName: e.target.value })
             }
           />
           <input
@@ -46,9 +47,9 @@ const Signup = () => {
             className="block border border-grey-light w-full p-3 rounded mb-4"
             name="lastname"
             placeholder="Last Name"
-            value={signupInput.lastname}
+            value={signupInput.lastName}
             onChange={(e) =>
-              setSignupInput({ ...signupInput, lastname: e.target.value })
+              setSignupInput({ ...signupInput, lastName: e.target.value })
             }
           />
 
@@ -88,7 +89,10 @@ const Signup = () => {
                 signupInput,
                 user,
                 setUser,
-                handleToast
+                handleToast,
+                setNotes,
+                setArchivedNotes,
+                setTrashedNotes
               );
               if (createUser) navigate("/notes");
             }}

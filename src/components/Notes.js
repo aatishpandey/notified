@@ -60,7 +60,8 @@ const Notes = () => {
 
   useEffect(() => {
     if (user.isLoggedIn) getUserNotes(setNotes);
-  }, []);
+    console.log(notes);
+  },[]);
 
   const handleToast = (toastInput) => {
     toastInput();

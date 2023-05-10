@@ -1,7 +1,15 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const useSignup = async (signupInput, user, setUser, handleToast) => {
+const useSignup = async (
+  signupInput,
+  user,
+  setUser,
+  handleToast,
+  setNotes,
+  setArchivedNotes,
+  setTrashedNotes
+) => {
   try {
     const res = await axios.post("/api/auth/signup", signupInput);
     console.log(res);
@@ -9,11 +17,15 @@ const useSignup = async (signupInput, user, setUser, handleToast) => {
       localStorage.setItem("token", res.data.encodedToken);
       setUser({
         ...user,
-        name: res.data.createdUser.firstname + res.data.createdUser.lastname,
+        name: res.data.createdUser.firstName + res.data.createdUser.lastName,
         email: res.data.createdUser.email,
         password: res.data.createdUser.password,
         isLoggedIn: true,
       });
+
+      setNotes([...res.data.foundUser.notes]);
+      setArchivedNotes([...res.data.foundUser.archives]);
+      setTrashedNotes([...res.data.foundUser.trash]);
       handleToast(
         toast.success("Signed Up", {
           autoClose: 5000,

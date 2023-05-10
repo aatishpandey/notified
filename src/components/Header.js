@@ -1,13 +1,19 @@
 import { Link } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import userContext from "../utils/userContext";
 import { useNavigate } from "react-router-dom";
 import { icon } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Header = () => {
-  const { user, setUser, showSideBar, setShowSideBar } =
-    useContext(userContext);
+  const {
+    user,
+    setUser,
+    setShowSideBar,
+    setNotes,
+    setArchivedNotes,
+    setTrashedNotes,
+  } = useContext(userContext);
   // console.log(user);
   const navigate = useNavigate();
 
@@ -54,14 +60,19 @@ const Header = () => {
         {user.isLoggedIn ? (
           <button
             onClick={() => {
+              navigate("/login");
               setUser({
-                ...user,
-                name: "",
-                email: "",
-                password: "",
-                isLoggedIn: false,
+                user: {
+                  name: "",
+                  email: "",
+                  password: "",
+                  isLoggedIn: false,
+                },
               });
-              localStorage.removeItem("token");
+              setNotes([]);
+              setArchivedNotes([]);
+              setTrashedNotes([]);
+              // localStorage.removeItem("token");
             }}
           >
             Logout
