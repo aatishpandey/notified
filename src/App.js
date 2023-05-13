@@ -30,6 +30,7 @@ const App = () => {
   const [note, setNote] = useState({
     id: "",
     content: "",
+    noteBgColor: "white",
   });
 
   const [showSideBar, setShowSideBar] = useState(false);

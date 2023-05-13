@@ -55,6 +55,7 @@ const Notes = () => {
 
   const [noteInput, setNoteInput] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [currentNote, setCurrentNote] = useState("");
   const { editNoteId } = noteId;
   const navigate = useNavigate();
 
@@ -86,7 +87,9 @@ const Notes = () => {
         notes={notes}
         setNotes={setNotes}
         noteId={editNoteId}
-        handleToast={handleToast}
+        currentNote={currentNote}
+        setCurrentNote={setCurrentNote}
+        key={noteId}
       />
       <div className="note-input flex justify-around items-center m-4">
         <ReactQuill
@@ -128,16 +131,6 @@ const Notes = () => {
         trash
       </Tooltip>
 
-      <Tooltip
-        anchorSelect=".color-btn"
-        style={tooltipStyle}
-        place="bottom"
-        noArrow
-        offset={2}
-      >
-        color
-      </Tooltip>
-
       <button
         className="bg-teal-600 font-bold  text-white self-center py-1 px-2 rounded-md my-4"
         onClick={() =>
@@ -150,11 +143,11 @@ const Notes = () => {
       {notes.length === 0 ? (
         <h1>"No Notes to Display"</h1>
       ) : (
-        <div className="flex flex-col items-center md:m-4 p-4 w-full md:w-[80%] ">
+        <div className="flex flex-col items-center md:m-4 p-4 w-full md:w-[80%]">
           {notes.map((note, index) => {
             return (
               <div
-                className="m-2 border-2 border-gray-200 text-sm sm:text-base hover:shadow-md px-4 pt-4 w-full      md:w-[65%] min-h-[135px] rounded-md flex flex-col overflow-hidden"
+                className={`m-2 border-2 border-gray-200 text-sm sm:text-base hover:shadow-md px-4 pt-4 w-full      md:w-[65%] min-h-[135px] rounded-md flex flex-col overflow-hidden bg-${note.noteBgColor}`}
                 key={index}
               >
                 <h1>
@@ -174,6 +167,7 @@ const Notes = () => {
                     onClick={() => {
                       setShowModal(true);
                       setNoteId({ ...noteId, editNoteId: note._id });
+                      setCurrentNote(note);
                     }}
                   />
 
@@ -220,15 +214,6 @@ const Notes = () => {
                         handleToast
                       );
                     }}
-                  />
-
-                  <FontAwesomeIcon
-                    icon={icon({
-                      name: "palette",
-                    })}
-                    size="lg"
-                    className="color-btn text-gray-500 ml-2 hover:text-gray-800 cursor-pointer 
-                  hover:bg-gray-200 hover:rounded-full p-2"
                   />
                 </div>
               </div>

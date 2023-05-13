@@ -29,7 +29,7 @@ const Header = () => {
       />
 
       <div
-        className="text-xl font-sans hover:text-teal-600 md:text-3xl "
+        className="text-xl font-sans hover:text-teal-600 md:text-3xl cursor-pointer"
         onClick={() => {
           navigate("/");
           setShowSideBar(false);

@@ -16,6 +16,7 @@ const userContext = createContext({
   note: {
     id: "",
     content: "",
+    noteBgColor: "white",
   },
   showSideBar: false,
 });
