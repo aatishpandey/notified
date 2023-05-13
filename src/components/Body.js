@@ -30,7 +30,7 @@ const Body = () => {
           {user.isLoggedIn ? (
             <div className="bg-teal-600 text-white font-bold py-2 px-4 rounded-md max-w-fit sm:max-w-[400px]">
               <span className="hidden sm:inline">Already Logged In?</span> See
-              your &nbsp;
+              your {" "}
               <Link to="/notes" className="hover:underline">
                 Notes
               </Link>
