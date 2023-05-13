@@ -273,12 +273,12 @@ export const deleteArchivedNote = async (id, setArchivedNotes) => {
         theme: "colored",
       });
     } else {
+      toast.error("Cannot delete note!", {
+        autoClose: 2000,
+        position: "bottom-left",
+        theme: "colored",
+      });
     }
-    toast.error("Cannot delete note!", {
-      autoClose: 2000,
-      position: "bottom-left",
-      theme: "colored",
-    });
   } catch (err) {
     console.log(err);
     toast.error("Cannot delete note!", {

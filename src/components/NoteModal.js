@@ -64,10 +64,10 @@ const NoteModal = ({
     <>
       {showmodal ? (
         <div
-          className={`fixed left-0 right-0 top-0 bottom-0 z-[9999] bg-[rgba(0,0,0,0.4)] flex justify-center items-center`}
+          className={`transition-all ease-in-out duration-1000 fixed left-0 right-0 top-0 bottom-0 z-[9999] bg-[rgba(0,0,0,0.4)] flex justify-center items-center`}
         >
           <div
-            className={`note-modal border-2 border-black w-[800px] min-h-[100px] flex flex-col p-2 bg-${editColor}`}
+            className={`transition-all ease-in-out duration-1000 note-modal border-2 border-black w-[800px] min-h-[100px] flex flex-col p-2 bg-${editColor}`}
           >
             {notes.map((note, index) => {
               if (noteId === note._id) {
@@ -104,7 +104,7 @@ const NoteModal = ({
                   name: "palette",
                 })}
                 size="lg"
-                className="color-btn text-gray-500 ml-2 hover:text-gray-800 cursor-pointer 
+                className="animate-pulse color-btn text-gray-500 ml-2 hover:text-gray-800 cursor-pointer 
                     hover:bg-gray-200 hover:rounded-full p-2 self-start"
               />
               <button className="ml-auto" onClick={() => setShowModal(false)}>
