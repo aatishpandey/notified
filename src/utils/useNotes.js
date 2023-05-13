@@ -13,9 +13,20 @@ export const getUserNotes = async (setNotes) => {
     // console.log(res);
     if (res.status === 200) {
       setNotes([...res.data.notes]);
+    } else {
+      toast.error("Cannot retrive notes!", {
+        autoClose: 2000,
+        position: "bottom-left",
+        theme: "colored",
+      });
     }
   } catch (err) {
     console.log(err);
+    toast.error("Cannot retrive notes!", {
+      autoClose: 2000,
+      position: "bottom-left",
+      theme: "colored",
+    });
   }
 };
 
@@ -39,10 +50,21 @@ export const addUserNotes = async (setNotes, note) => {
         position: "bottom-left",
         theme: "colored",
       });
+    } else {
+      toast.error("Cannot create note!", {
+        autoClose: 2000,
+        position: "bottom-left",
+        theme: "colored",
+      });
     }
     // console.log(res);
   } catch (err) {
     console.log(err);
+    toast.error("Cannot create note", {
+      autoClose: 2000,
+      position: "bottom-left",
+      theme: "colored",
+    });
   }
 };
 
@@ -68,9 +90,20 @@ export const updateUserNotes = async (id, note, setNotes) => {
         position: "bottom-left",
         theme: "colored",
       });
+    } else {
+      toast.error("Cannot update note!", {
+        autoClose: 2000,
+        position: "bottom-left",
+        theme: "colored",
+      });
     }
   } catch (err) {
     console.log(err);
+    toast.error("Cannot update note!", {
+      autoClose: 2000,
+      position: "bottom-left",
+      theme: "colored",
+    });
   }
 };
 
@@ -93,9 +126,20 @@ export const deleteUserNotes = async (id, setNotes) => {
         position: "bottom-left",
         theme: "colored",
       });
+    } else {
+      toast.error("Cannot delete note!", {
+        autoClose: 2000,
+        position: "bottom-left",
+        theme: "colored",
+      });
     }
   } catch (err) {
     console.log(err);
+    toast.error("Cannot delete note!", {
+      autoClose: 2000,
+      position: "bottom-left",
+      theme: "colored",
+    });
   }
 };
 
@@ -109,9 +153,22 @@ export const getArchivedNotes = async (setArchivedNotes) => {
       },
     });
     // console.log(res);
-    if (res.status === 200) setArchivedNotes([...res.data.archives]);
+    if (res.status === 200) {
+      setArchivedNotes([...res.data.archives]);
+    } else {
+      toast.error("Cannot retrieve notes!", {
+        autoClose: 2000,
+        position: "bottom-left",
+        theme: "colored",
+      });
+    }
   } catch (err) {
     console.log(err);
+    toast.error("Cannot retrieve notes!", {
+      autoClose: 2000,
+      position: "bottom-left",
+      theme: "colored",
+    });
   }
 };
 
@@ -138,9 +195,20 @@ export const addArchiveNotes = async (id, note, setNotes, setArchivedNotes) => {
         position: "bottom-left",
         theme: "colored",
       });
+    } else {
+      toast.error("Cannot add note to archive!", {
+        autoClose: 2000,
+        position: "bottom-left",
+        theme: "colored",
+      });
     }
   } catch (err) {
     console.log(err);
+    toast.error("Cannot add note to archive!", {
+      autoClose: 2000,
+      position: "bottom-left",
+      theme: "colored",
+    });
   }
 };
 
@@ -168,9 +236,20 @@ export const restoreArchivedNotes = async (id, setNotes, setArchivedNotes) => {
         position: "bottom-left",
         theme: "colored",
       });
+    } else {
+      toast.error("Cannot unarchive the note!", {
+        autoClose: 2000,
+        position: "bottom-left",
+        theme: "colored",
+      });
     }
   } catch (err) {
     console.log(err);
+    toast.error("Cannot unarchive the note!", {
+      autoClose: 2000,
+      position: "bottom-left",
+      theme: "colored",
+    });
   }
 };
 
@@ -193,9 +272,20 @@ export const deleteArchivedNote = async (id, setArchivedNotes) => {
         position: "bottom-left",
         theme: "colored",
       });
+    } else {
     }
+    toast.error("Cannot delete note!", {
+      autoClose: 2000,
+      position: "bottom-left",
+      theme: "colored",
+    });
   } catch (err) {
     console.log(err);
+    toast.error("Cannot delete note!", {
+      autoClose: 2000,
+      position: "bottom-left",
+      theme: "colored",
+    });
   }
 };
 
@@ -209,9 +299,22 @@ export const getTrashedNotes = async (setTrashedNotes) => {
       },
     });
     // console.log(res);
-    if (res.status === 200) setTrashedNotes([...res.data.trash]);
+    if (res.status === 200) {
+      setTrashedNotes([...res.data.trash]);
+    } else {
+      toast.error("Cannot retrieve note!", {
+        autoClose: 2000,
+        position: "bottom-left",
+        theme: "colored",
+      });
+    }
   } catch (err) {
     console.log(err);
+    toast.error("Cannot retrieve note!", {
+      autoClose: 2000,
+      position: "bottom-left",
+      theme: "colored",
+    });
   }
 };
 
@@ -238,9 +341,20 @@ export const addTrashNotes = async (id, setNotes, setTrashedNotes) => {
         position: "bottom-left",
         theme: "colored",
       });
+    } else {
+      toast.error("Cannot move note to trash!", {
+        autoClose: 2000,
+        position: "bottom-left",
+        theme: "colored",
+      });
     }
   } catch (err) {
     console.log(err);
+    toast.error("Cannot move note to trash!", {
+      autoClose: 2000,
+      position: "bottom-left",
+      theme: "colored",
+    });
   }
 };
 
@@ -267,9 +381,20 @@ export const restoreTrashedNotes = async (id, setNotes, setTrashedNotes) => {
         position: "bottom-left",
         theme: "colored",
       });
+    } else {
+      toast.error("Cannot restore the note!", {
+        autoClose: 2000,
+        position: "bottom-left",
+        theme: "colored",
+      });
     }
   } catch (err) {
     console.log(err);
+    toast.error("Cannot restore the note!", {
+      autoClose: 2000,
+      position: "bottom-left",
+      theme: "colored",
+    });
   }
 };
 
@@ -291,8 +416,19 @@ export const deleteTrashedNotes = async (id, setTrashedNotes) => {
         position: "bottom-left",
         theme: "colored",
       });
+    } else {
+      toast.error("Cannot delete note!", {
+        autoClose: 2000,
+        position: "bottom-left",
+        theme: "colored",
+      });
     }
   } catch (err) {
     console.log(err);
+    toast.error("Cannot delete note!", {
+      autoClose: 2000,
+      position: "bottom-left",
+      theme: "colored",
+    });
   }
 };

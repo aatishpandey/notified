@@ -5,14 +5,13 @@ const useSignup = async (
   signupInput,
   user,
   setUser,
-
   setNotes,
   setArchivedNotes,
   setTrashedNotes
 ) => {
   try {
     const res = await axios.post("/api/auth/signup", signupInput);
-    console.log(res);
+    // console.log(res);
     if (res.status === 201) {
       localStorage.setItem("token", res.data.encodedToken);
       setUser({
@@ -34,9 +33,21 @@ const useSignup = async (
       });
 
       return true;
+    } else {
+      toast.error("Signup Failed!", {
+        autoClose: 2000,
+        position: "bottom-left",
+        theme: "colored",
+      });
+      return false;
     }
   } catch (err) {
     console.log(err);
+    toast.error("Signup failed", {
+      autoClose: 2000,
+      position: "bottom-left",
+      theme: "colored",
+    });
   }
   return false;
 };

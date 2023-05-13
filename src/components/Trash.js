@@ -75,7 +75,7 @@ const Trash = () => {
           {trashedNotes.map((note, index) => {
             return (
               <div
-                className="m-2 border-2 border-gray-200 text-sm sm:text-base hover:shadow-md px-4 pt-4 w-full      md:w-[65%] min-h-[135px] rounded-md flex flex-col overflow-hidden"
+                className={`m-2 border-2 border-gray-200 text-sm sm:text-base hover:shadow-md px-4 pt-4 w-full      md:w-[65%] min-h-[135px] rounded-md flex flex-col overflow-hidden bg-${note.noteBgColor}`}
                 key={index}
               >
                 <h1>

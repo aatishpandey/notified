@@ -80,9 +80,9 @@ const Signup = () => {
           <button
             type="submit"
             className="w-full text-center py-3 rounded bg-teal-600 text-white font-bold hover:bg-green-dark focus:outline-none my-1"
-            onClick={(e) => {
+            onClick={async () => {
               // e.preventDefault();
-              const createUser = signup(
+              const createUser = await signup(
                 signupInput,
                 user,
                 setUser,

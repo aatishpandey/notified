@@ -34,11 +34,23 @@ const useLogin = async (
       });
 
       return true;
+    } else {
+      toast.error("Login Failed! Please enter correct credentials", {
+        autoClose: 2000,
+        position: "bottom-left",
+        theme: "colored",
+      });
+      return false;
     }
   } catch (err) {
     console.log(err);
+    toast.error("Login Failed!", {
+      autoClose: 2000,
+      position: "bottom-left",
+      theme: "colored",
+    });
+    return false;
   }
-  return false;
 };
 
 export default useLogin;

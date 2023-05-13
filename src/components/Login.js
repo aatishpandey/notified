@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useContext } from "react";
 import userContext from "../utils/userContext";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 
 const Login = () => {
   const [loginInput, setLoginInput] = useState({
@@ -49,8 +49,8 @@ const Login = () => {
           <button
             type="submit"
             className="w-full text-center py-3 rounded bg-teal-600 text-white font-bold hover:bg-green-dark focus:outline-none my-1"
-            onClick={() => {
-              const loginUser = login(
+            onClick={async () => {
+              const loginUser = await login(
                 loginInput,
                 user,
                 setUser,
@@ -58,7 +58,10 @@ const Login = () => {
                 setArchivedNotes,
                 setTrashedNotes
               );
-              if (loginUser) navigate("/notes");
+
+              if (loginUser) {
+                navigate("/notes");
+              }
             }}
           >
             Login
@@ -77,8 +80,8 @@ const Login = () => {
         </div>
         <button
           className="hover:text-teal-600"
-          onClick={() => {
-            const loginUser = login(
+          onClick={async () => {
+            const loginUser = await login(
               {
                 email: "guest@gmail.com",
                 password: "guestUser",
@@ -89,7 +92,9 @@ const Login = () => {
               setArchivedNotes,
               setTrashedNotes
             );
-            if (loginUser) navigate("/notes");
+            if (loginUser) {
+              navigate("/notes");
+            }
           }}
         >
           Guest Login
