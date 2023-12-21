@@ -2,6 +2,7 @@
 
 <img width="1253" alt="Screenshot 2023-12-18 at 6 02 21 PM" src="https://github.com/aatishpandey/notified/assets/32216307/0a9f6311-8885-4a27-bec9-55ec9df3413b">
 
+### Check out the Web app [here](notified.netlify.app)
 
 Notified is a versatile and user-friendly note-taking web application designed to simplify your digital note-keeping experience. This project, developed as part of a self-learning initiative, showcases my proficiency in web development technologies, including ReactJS, JavaScript, HTML, and CSS.
 
